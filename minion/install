@@ -1,4 +1,5 @@
 # /bin/bash
+# Be sure that in the hostfile the name "master" has a entry 
 systemctl stop firewalld
 systemctl disable firewalld
 
@@ -17,20 +18,19 @@ cd /git
 git clone https://github.com/stackbuilder/kubernetes-workshop
 
 
-yum -y install etcd kubernetes flannel
+yum -y install kubernetes flannel
 
-cp /etc/etcd/etcd.conf /etc/etcd/etcd.conf.orginal
 cp /etc/sysconfig/flanneld /etc/sysconfig/flanneld.orginal
 cp /etc/kubernetes/apiserver /etc/kubernetes/apiserver.orginal
-mv /git/kubernetes-workshop/master/conf/etcd.conf /etc/etcd/etcd.conf
-mv /git/kubernetes-workshop/master/conf/flanneld /etc/sysconfig/flanneld
-mv /git/kubernetes-workshop/master/conf/apiserver /etc/kubernetes/apiserver
+cp /etc/kubernetes/config /etc/kubernetes/config.orginal
 
+mv /git/kubernetes-workshop/minion/conf/flanneld /etc/sysconfig/flanneld
+mv /git/kubernetes-workshop/minion/conf/apiserver /etc/kubernetes/apiserver
+mv /git/kubernetes-workshop/minion/conf/config /etc/kubernetes/config
 
-for SERVICES in etcd kube-apiserver kube-controller-manager kube-scheduler kube-proxy flanneld; do
+for SERVICES in kube-proxy kubelet docker flanneld; do
     systemctl restart $SERVICES
     systemctl enable $SERVICES
     systemctl status $SERVICES 
 done
 
-etcdctl mk /coreos.com/network/config '{"Network":"172.17.0.0/16"}'

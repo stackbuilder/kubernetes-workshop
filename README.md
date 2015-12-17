@@ -7,6 +7,7 @@ It requires 3 (or more) nodes
 
 Use the install scripts in /master or /minion to install and configure the kubernetes cluster.  
 Be carefull, this is not a configuration for production use.
+Warning: Be sure that all hosts has an entry in /etc/hosts to resolve the name "master" to the ip address of the master. 
 
 Some usefull Kubernetes commands:
 ```
