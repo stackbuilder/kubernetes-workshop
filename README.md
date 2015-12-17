@@ -6,6 +6,7 @@ It requires 3 (or more) nodes
 * minion2 
 
 Use the install scripts in /master or /minion to install and configure the kubernetes cluster.  
+Be carefull, this is not a configuration for production use.
 
 Some usefull Kubernetes commands:
 ```
