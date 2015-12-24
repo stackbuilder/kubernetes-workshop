@@ -27,10 +27,16 @@ mv -f /git/kubernetes-workshop/master/conf/flanneld /etc/sysconfig/flanneld
 mv -f /git/kubernetes-workshop/master/conf/apiserver /etc/kubernetes/apiserver
 
 
-for SERVICES in etcd kube-apiserver kube-controller-manager kube-scheduler kube-proxy flanneld; do
+for SERVICES in etcd kube-apiserver kube-controller-manager kube-scheduler kube-proxy; do
     systemctl restart $SERVICES
     systemctl enable $SERVICES
     systemctl status $SERVICES 
 done
 
 etcdctl mk /coreos.com/network/config '{"Network":"172.17.0.0/16"}'
+
+for SERVICES in flanneld; do
+    systemctl restart $SERVICES
+    systemctl enable $SERVICES
+    systemctl status $SERVICES 
+done
