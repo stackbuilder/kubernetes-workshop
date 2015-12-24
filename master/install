@@ -22,9 +22,9 @@ yum -y install etcd kubernetes flannel
 cp /etc/etcd/etcd.conf /etc/etcd/etcd.conf.orginal
 cp /etc/sysconfig/flanneld /etc/sysconfig/flanneld.orginal
 cp /etc/kubernetes/apiserver /etc/kubernetes/apiserver.orginal
-mv /git/kubernetes-workshop/master/conf/etcd.conf /etc/etcd/etcd.conf
-mv /git/kubernetes-workshop/master/conf/flanneld /etc/sysconfig/flanneld
-mv /git/kubernetes-workshop/master/conf/apiserver /etc/kubernetes/apiserver
+mv -f /git/kubernetes-workshop/master/conf/etcd.conf /etc/etcd/etcd.conf
+mv -f /git/kubernetes-workshop/master/conf/flanneld /etc/sysconfig/flanneld
+mv -f /git/kubernetes-workshop/master/conf/apiserver /etc/kubernetes/apiserver
 
 
 for SERVICES in etcd kube-apiserver kube-controller-manager kube-scheduler kube-proxy flanneld; do
