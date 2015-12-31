@@ -15,18 +15,19 @@ yum -y install git net-tools telnet vim
 #get the git files
 mkdir /git
 cd /git
+rm -rf /git/kubernetes-workshop
 git clone https://github.com/stackbuilder/kubernetes-workshop
 
 
 yum -y install kubernetes flannel
 
-cp /etc/sysconfig/flanneld /etc/sysconfig/flanneld.orginal
-cp /etc/kubernetes/apiserver /etc/kubernetes/apiserver.orginal
-cp /etc/kubernetes/config /etc/kubernetes/config.orginal
+cp -f /etc/sysconfig/flanneld /etc/sysconfig/flanneld.orginal
+cp -f /etc/kubernetes/apiserver /etc/kubernetes/apiserver.orginal
+cp -f /etc/kubernetes/config /etc/kubernetes/config.orginal
 
-mv /git/kubernetes-workshop/minion/conf/flanneld /etc/sysconfig/flanneld
-mv /git/kubernetes-workshop/minion/conf/apiserver /etc/kubernetes/apiserver
-mv /git/kubernetes-workshop/minion/conf/config /etc/kubernetes/config
+mv -f /git/kubernetes-workshop/minion/conf/flanneld /etc/sysconfig/flanneld
+mv -f /git/kubernetes-workshop/minion/conf/apiserver /etc/kubernetes/apiserver
+mv -f /git/kubernetes-workshop/minion/conf/config /etc/kubernetes/config
 
 for SERVICES in kube-proxy kubelet docker flanneld; do
     systemctl restart $SERVICES
