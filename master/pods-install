@@ -1,0 +1,4 @@
+# /bin/bash
+# Run this if your cluster is up and running.
+kubectl create -f /git/kubernetes-workshop/master/pods/kube-ui-rc.yaml
+kubectl create -f /git/kubernetes-workshop/master/pods/kube-ui-svc.yaml
