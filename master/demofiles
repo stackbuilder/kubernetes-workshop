@@ -1,0 +1,9 @@
+kubectl run my-nginx --image=nginx --replicas=2 --port=80
+kubectl expose rc my-nginx --port=80 --create-external-load-balancer=true --public-ip=<your_master_public_ip>
+kubectl get rc my-nginx
+kubectl scale --current-replicas=2 --replicas=8 replicationcontrollers my-nginx
+
+# Attach or run a command on a pod or container
+kubectl exec -t -i bla-nllnj bash
+
+git clone https://github.com/kubernetes/kubernetes.git
