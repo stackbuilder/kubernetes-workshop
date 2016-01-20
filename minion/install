@@ -19,7 +19,7 @@ rm -rf /git/kubernetes-workshop
 git clone https://github.com/stackbuilder/kubernetes-workshop
 
 
-yum -y install kubernetes flannel
+yum -y install flannel kubernetes
 
 cp -f /etc/sysconfig/flanneld /etc/sysconfig/flanneld.orginal
 cp -f /etc/kubernetes/apiserver /etc/kubernetes/apiserver.orginal
@@ -30,9 +30,8 @@ mv -f /git/kubernetes-workshop/minion/conf/flanneld /etc/sysconfig/flanneld
 # mv -f /git/kubernetes-workshop/minion/conf/config /etc/kubernetes/config
 mv -f /git/kubernetes-workshop/minion/conf/kubelet /etc/kubernetes/kubelet
 
-for SERVICES in kube-proxy kubelet docker flanneld; do
+for SERVICES in flanneld kube-proxy kubelet docker; do
     systemctl restart $SERVICES
     systemctl enable $SERVICES
     systemctl status $SERVICES 
 done
-
