@@ -19,12 +19,12 @@ git clone https://github.com/stackbuilder/kubernetes-workshop
 
 yum -y install etcd kubernetes flannel
 
-cp /etc/etcd/etcd.conf /etc/etcd/etcd.conf.orginal
-cp /etc/sysconfig/flanneld /etc/sysconfig/flanneld.orginal
-cp /etc/kubernetes/apiserver /etc/kubernetes/apiserver.orginal
-mv -f /git/kubernetes-workshop/master/conf/etcd.conf /etc/etcd/etcd.conf
-mv -f /git/kubernetes-workshop/master/conf/flanneld /etc/sysconfig/flanneld
-mv -f /git/kubernetes-workshop/master/conf/apiserver /etc/kubernetes/apiserver
+cp -f /etc/etcd/etcd.conf /etc/etcd/etcd.conf.orginal
+cp -f /etc/sysconfig/flanneld /etc/sysconfig/flanneld.orginal
+cp -f /etc/kubernetes/apiserver /etc/kubernetes/apiserver.orginal
+cp -f /git/kubernetes-workshop/master/conf/etcd.conf /etc/etcd/etcd.conf
+cp -f /git/kubernetes-workshop/master/conf/flanneld /etc/sysconfig/flanneld
+cp -f /git/kubernetes-workshop/master/conf/apiserver /etc/kubernetes/apiserver
 
 
 for SERVICES in etcd kube-apiserver kube-controller-manager kube-scheduler kube-proxy; do
@@ -40,3 +40,12 @@ for SERVICES in flanneld; do
     systemctl enable $SERVICES
     systemctl status $SERVICES 
 done
+
+# Install NFS on the master, only if there is no other NFS server available
+yum -y install nfs-utils
+mkdir /var/nfsshare
+chmod -R 777 /var/nfsshare/
+systemctl enable rpcbind
+systemctl enable nfs-server
+cp -f /etc/exports /etc/exports.original 
+echo "/var/nfsshare    10.0.0.0/24(rw,sync,no_root_squash,no_all_squash)" > /etc/exports
